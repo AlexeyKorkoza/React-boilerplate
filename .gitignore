@@ -1,0 +1,8 @@
+.idea/
+.vscode/
+**/node_modules
+*.log
+logs
+npm-debug.log
+server/coverage
+client/public
