@@ -15,7 +15,7 @@ const plugins = [
     children: true,
     minChunks: 4
   }),
-  new ExtractTextPlugin({ filename: 'style.css', allChunks: true }),
+  new ExtractTextPlugin({ filename: 'app.css', allChunks: true }),
   new webpack.optimize.AggressiveMergingPlugin(),
 ];
 
@@ -24,20 +24,24 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 module.exports = {
-    entry: __dirname + '/src/index.js',
+    context: __dirname + '/frontend/src',
+    watchOptions: {
+        poll: true,
+    },
+    entry: './index.js',
+
     output: {
-        path: __dirname + '/public/build',
-        publicPath: '/public/build',
-        filename: "bundle.js"
+        path: __dirname + '/frontend/public',
+        publicPath: '/frontend/public/',
+        filename: 'app.js',
     },
+
     resolve: {
-        modules: [path.resolve(__dirname), 'node_modules'],
-        alias: {
-            applicationStyles: 'public/build/build.css',
-        },
-        extensions: ['*', '.js', '.jsx'],
+        extensions: ['.js', '.jsx'],
     },
+
     plugins,
+
     module: {
         rules: [
             {
@@ -56,15 +60,10 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                use: [
-                    'style-loader', 'css-loader',
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            plugins: [autoprefixer]
-                        }
-                    }
-                ]
+                loader: ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    use: "css-loader"
+                }),
             },
             {
                 test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,

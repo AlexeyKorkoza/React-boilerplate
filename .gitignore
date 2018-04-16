@@ -4,5 +4,4 @@
 *.log
 logs
 npm-debug.log
-server/coverage
-client/public
+frontend/public

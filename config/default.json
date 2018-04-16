@@ -1,0 +1,11 @@
+{
+  "app": {
+    "env": "development",
+    "port": 9000,
+    "host": "127.0.0.1"
+  },
+  "paths": {
+    "views": "./backend/views",
+    "public": "./frontend/public"
+  }
+}
